@@ -1,0 +1,16 @@
+extends layout
+
+include ./mixins/newchirp.jade
+include ./mixins/feed.jade
+include ./mixins/login.jade
+
+block content
+  if logged_in_user
+    +newchirp
+    h1 Feed
+    +feed
+  else
+    +login
+
+block scripts
+  script(src='/js/upload.js')

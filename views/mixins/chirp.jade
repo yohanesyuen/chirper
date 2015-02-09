@@ -1,0 +1,6 @@
+mixin chirpitem(chirp)
+  div.chirp
+    a(href='/users/#{chirp.author.username}') #{chirp.author.username}
+    p.content #{chirp.text}
+    p.creation_time #{chirp.created_at.toUTCString()}
+

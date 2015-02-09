@@ -1,0 +1,9 @@
+include ./chirp.jade
+
+mixin feed
+  div.feed
+    .container
+      if chirps
+        each chirp in chirps
+          +chirpitem(chirp)
+
