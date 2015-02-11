@@ -27,4 +27,12 @@ actions.follow = function(id){
   this.post(param);
 };
 
+actions.unfollow = function(id){
+  var param = '';
+  param += "action=unfollow";
+  param += "&params=" + id;
+  console.log(param);
+  this.post(param);
+};
+
 window.actions = actions;

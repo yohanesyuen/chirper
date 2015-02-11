@@ -20,6 +20,12 @@ var renderUser = function(req, res, params, done){
       data.user.profile_pic = 'https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120';
   }
 
+  if (req.user){
+    if(data.user.followers.indexOf(req.user.str_id) > -1){
+      data.user.followed = true;
+    }
+  }
+
   if (data.feed){
     var chirps = feed.chirps;
     data.chirps = chirps;
