@@ -8,17 +8,13 @@ block content
       span Settings
   else
     if logged_in_user
-      if user.followed
-        button.user-actions-unfollow-button.js-unfollow-btn.unfollow-button.btn(type='button', data='#{user._id}')
-          span.button-text.unfollow-text.unfollow-button Unfollow
-      else
-        button.user-actions-follow-button.js-follow-btn.follow-button.btn(type='button', data='#{user._id}')
-          span.button-text.follow-text.follow-button Follow
+      button.user-actions-follow-button.js-follow-btn.follow-button.btn(type='button', data='#{user._id}')
+        span.button-text.follow-text.follow-button Follow
   ul
     li Chirps: #{user.chirpCount}
     li followers:
         a(href='#!followers') #{user.followers.length}
-    li following:
+    li following: 
         a(href='#!following') #{user.following.length}
 
 block scripts
