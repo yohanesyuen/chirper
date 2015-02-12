@@ -8,7 +8,7 @@ module.exports = function(passport){
     var chirps = {};
     if(req.user){
       var chirp_sources = req.user.following;
-      chirp_sources.push(req.user.str_id);
+      chirp_sources.push(req.user._id);
       Chirp.find()
       .where('author').in(chirp_sources)
       .populate('author')

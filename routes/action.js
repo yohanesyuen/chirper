@@ -12,8 +12,8 @@ var follow = function(self, target){
       User.findOne({_id: target}, function(err, t){
         if (!err && t){
           _target = t;
-          _self.following.push(_target._id.toString());
-          _target.followers.push(_self._id.toString());
+          _self.following.push(_target._id);
+          _target.followers.push(_self._id);
           _self.following = _.uniq(_self.following);
           _target.followers = _.uniq(_target.followers);
           _self.save();
@@ -35,10 +35,8 @@ var unfollow = function(self, target){
       User.findOne({_id: target}, function(err, t){
         if (!err && t){
           _target = t;
-          _self.following.push(_target._id.toString());
-          _target.followers.push(_self._id.toString());
-          _self.following = _.without(_self.following, _target.str_id);
-          _target.followers = _.without(_target.followers, _self.str_id);
+          _self.following.remove(_target._id);
+          _target.followers.remove(_self._id);
           _self.save();
           _target.save();
         }

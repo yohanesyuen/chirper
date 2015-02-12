@@ -15,7 +15,7 @@ router.post('/', function(req, res){
         if (!err && user){
           console.log('Setting str_id for' + user.username);
           user.str_id = user._id.toString();
-          newchirp.author = user.str_id;
+          newchirp.author = user._id;
           user.save();
         }
       });
