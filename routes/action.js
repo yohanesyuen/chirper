@@ -37,8 +37,8 @@ var unfollow = function(self, target){
           _target = t;
           _self.following.push(_target._id.toString());
           _target.followers.push(_self._id.toString());
-          _self.following = _.without(_target.str_id);
-          _target.followers = _.without(_self.str_id);
+          _self.following = _.without(_self.following, _target.str_id);
+          _target.followers = _.without(_target.followers, _self.str_id);
           _self.save();
           _target.save();
         }
