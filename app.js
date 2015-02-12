@@ -42,7 +42,7 @@ app.use(passport.session());
 var flash = require('connect-flash');
 app.use(flash());
 
-var initPassport = require('./passport/init.js');
+var initPassport = require('./passport/init');
 initPassport(passport);
 
 var routes = require('./routes/routes')(passport);
