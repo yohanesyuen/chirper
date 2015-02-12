@@ -7,11 +7,9 @@ var loginLocalStrategy = new LocalStrategy({passReqToCallback : true}, function(
     if (err){
       return done(err);}
     if (!user){
-      console.log('No such user');
       return done(null, false, req.flash('message', 'No such user'));
     }
     if (!bCrypt.compareSync(password, user.password)){
-      console.log('Invalid password');
       return done(null, false, req.flash('message', 'Invalid password'));
     }
     console.log( user.firstName + ' logged in at ' + new Date().toUTCString());
