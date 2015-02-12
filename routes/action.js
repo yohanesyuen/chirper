@@ -12,10 +12,10 @@ var follow = function(self, target){
       User.findOne({_id: target}, function(err, t){
         if (!err && t){
           _target = t;
+          _self.following.remove(_target._id);
           _self.following.push(_target._id);
+          _target.followers.remove(_self._id);
           _target.followers.push(_self._id);
-          _self.following = _.uniq(_self.following);
-          _target.followers = _.uniq(_target.followers);
           _self.save();
           _target.save();
         }
