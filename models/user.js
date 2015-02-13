@@ -12,6 +12,7 @@ var userSchema = Schema({
   str_id: String,
   created_at: Date,
   chirpCount: Number,
+  last_login: Date,
   followers: [{type: Schema.Types.ObjectId, ref: 'User'}],
   following: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
@@ -30,8 +31,11 @@ userSchema.methods.comparePassword = function(candidatePassword, done){
   if (!bCrypt.compareSync(candidatePassword, this.password)){
     return done('', false);
   }
-  else
+  else{
+    this.last_login = new Date();
+    this.save();
     return done(null, this);
+  }
 };
 
 var User = mongoose.model('User', userSchema);
