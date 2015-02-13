@@ -4,6 +4,8 @@ block content
   img(src='#{user.profile_pic}')
   h1 #{user.firstName} #{user.lastName}
   if user.is_self
+    if user.last_login
+      p You last logged on #{user.last_login.toLocaleDateString()}
     button.stub.btn(type='button')
       span Settings
   else
