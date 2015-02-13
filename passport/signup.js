@@ -14,7 +14,7 @@ var signupLocalStrategy = new LocalStrategy({passReqToCallback : true}, function
       else {
         var newUser = new User({
           username: username,
-          password: bCrypt.hashSync(password, bCrypt.genSaltSync(10), null),
+          password: password,
           email: req.param('email'),
           firstName: req.param('firstName'),
           lastName: req.param('lastName'),
