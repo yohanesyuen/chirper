@@ -10,7 +10,6 @@ var loginLocalStrategy = new LocalStrategy({passReqToCallback : true}, function(
       return done(null, false, req.flash('message', 'No such user'));
     }
     return user.comparePassword(password, done);
-    return done(null, user);
   });
 });
 
