@@ -22,6 +22,7 @@ module.exports = function(passport) {
 
   router.use('/action', require('./action'));
 
+  router.use('/api', require('./api'));
 
   router.post('/login', passport.authenticate('login', {
     successRedirect: '/',
