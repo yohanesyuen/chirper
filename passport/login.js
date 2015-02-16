@@ -17,7 +17,7 @@ var loginLocalStrategy = new LocalStrategy({passReqToCallback : true}, function(
         return done(null, user);
       }
       else
-        return done(null, false, {message : 'Invalid Password'});
+        return done(null, false, req.flash('message', 'No such user'));
     });
   });
 });
