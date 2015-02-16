@@ -32,7 +32,7 @@ userSchema.methods.comparePassword = function(candidatePassword, done){
     return done('', false);
   }
   else{
-    return done(null, isMatch);
+    return done(null, true);
   }
 };
 
