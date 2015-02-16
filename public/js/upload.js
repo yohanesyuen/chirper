@@ -19,7 +19,8 @@ var chirp = function(contents) {
   var params = '';
   params += 'content=';
   params += contents;
-  upload('/upload', params);
+  console.log(upload('/upload', params));
+  $('.chirp-content').val('');
 };
 
 $('.chirp-btn').click(function(){
