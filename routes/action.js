@@ -5,10 +5,8 @@ var User = require('../models/user');
 
 var follow = function(self, target){
   var _self, _target;
-  User.findOne({_id: self._id}, function(err, s){
-    if (!err && s)
-      _self = s;
-    if (_self) {
+  User.findOne({_id: self._id}, function(err, _self){
+    if (_self && !err) {
       User.findOne({_id: target}, function(err, t){
         if (!err && t){
           _target = t;
@@ -28,10 +26,8 @@ var follow = function(self, target){
 
 var unfollow = function(self, target){
   var _self, _target;
-  User.findOne({_id: self._id}, function(err, s){
-    if (!err && s)
-      _self = s;
-    if (_self) {
+  User.findOne({_id: self._id}, function(err, _self){
+    if (_self && !err) {
       User.findOne({_id: target}, function(err, t){
         if (!err && t){
           _target = t;
