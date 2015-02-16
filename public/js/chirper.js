@@ -13,5 +13,6 @@ chirper.controller('newChirpCtrl',['$scope', '$http', function($scope, $http){
   $scope.chirp = function(){
     var content = {content: $scope.chirpContent};
     $http.post('/upload', content);
+    $scope.chirpcontent = '';
   };
 }]);
