@@ -27,14 +27,12 @@ userSchema.pre('save', function(next){
   next();
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, done){
+userSchema.methods.comparePassword = function(candidatePassword, isMatch){
   if (!bCrypt.compareSync(candidatePassword, this.password)){
     return done('', false);
   }
   else{
-    this.last_login = new Date();
-    this.save();
-    return done(null, this);
+    return done(null, isMatch);
   }
 };
 

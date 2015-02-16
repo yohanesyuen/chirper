@@ -9,7 +9,16 @@ var loginLocalStrategy = new LocalStrategy({passReqToCallback : true}, function(
     if (!user){
       return done(null, false, req.flash('message', 'No such user'));
     }
-    return user.comparePassword(password, done);
+    user.comparePassword(password, function(err, isMatch){
+      if (err) return done(err);
+      if (isMatch) {
+        user.last_login = new Date();
+        user.save();
+        return done(null, user);
+      }
+      else
+        return done(null, false, {message : 'Invalid Password'});
+    });
   });
 });
 
