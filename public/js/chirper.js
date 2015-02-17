@@ -8,11 +8,3 @@ chirper.config(['$httpProvider', function($httpProvider) {
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);
-
-chirper.controller('newChirpCtrl',['$scope', '$http', function($scope, $http){
-  $scope.chirp = function(){
-    var content = {content: $scope.chirpContent};
-    $http.post('/upload', content);
-    $scope.chirpcontent = '';
-  };
-}]);
