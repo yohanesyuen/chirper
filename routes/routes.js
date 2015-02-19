@@ -3,6 +3,17 @@ var router = express.Router();
 var User = require('../models/user');
 var Chirp = require('../models/chirp');
 
+var isAuthenticated = function(req, res, next){
+  if (typeof req.isAuthenticated === 'function') {
+    if (req.isAuthenticated())
+      return next();
+    else
+      res.redirect('/');
+  }
+  else
+    res.redirect('/');
+};
+
 var renderUser = require('../utils/renderuser');
 
 module.exports = function(passport) {
