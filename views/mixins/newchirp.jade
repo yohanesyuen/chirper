@@ -1,5 +1,5 @@
 mixin newchirp
   div.form-group.new-chirp.container.row-fluid(ng-controller='newChirpCtrl')
     label(for='chirp') New Chirp
-    textarea.form-control.chirp-content(ng-bind='chirpContent')
+    textarea.form-control.chirp-content(ng-model='chirpContent')
     button.btn.chirp-btn.pull-right(ng-click='chirp()') Chirp!
