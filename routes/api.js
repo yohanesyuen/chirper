@@ -15,7 +15,7 @@ router.get('/follow/:id', utils.ensureAuthenticated, function(req, res){
           _target.followers.push(_self._id);
           _self.save();
           _target.save();
-          res.json({new_state: following});
+          res.json({new_state: 'following'});
         }
         else
           done(err);
@@ -36,7 +36,7 @@ router.get('/unfollow/:id', utils.ensureAuthenticated, function(req, res){
           _target.followers.remove(_self._id);
           _self.save();
           _target.save();
-          res.json({new_state: not-following});
+          res.json({new_state: 'not-following'});
         }
         else
           done(err);
