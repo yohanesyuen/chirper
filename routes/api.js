@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var User = require('../models/user');
+var utils = require('../utils');
 
-router.get('/follow/:id', function(req, res){
+router.get('/follow/:id', ensureAuthenticated, function(req, res){
   User.findOne({_id: req.user.id}, function(err, _self, done){
     if (_self && !err) {
       User.findOne({_id: req.params.id}, function(err, _target, done){
@@ -14,7 +15,7 @@ router.get('/follow/:id', function(req, res){
           _target.followers.push(_self._id);
           _self.save();
           _target.save();
-          res.send('{new_state: following}');
+          res.json('{new_state: following}');
         }
         else
           done(err);
@@ -25,7 +26,7 @@ router.get('/follow/:id', function(req, res){
   });
 });
 
-router.get('/unfollow/:id', function(req, res){
+router.get('/unfollow/:id', utils.ensureAuthenticated, function(req, res){
   User.findOne({_id: req.user.id}, function(err, _self){
     if (_self && !err){
       User.findOne({_id: req.params.id}, function(err, _target){
@@ -35,7 +36,7 @@ router.get('/unfollow/:id', function(req, res){
           _target.followers.remove(_self._id);
           _self.save();
           _target.save();
-          res.send('{new_state: not-following}');
+          res.json('{new_state: not-following}');
         }
         else
           done(err);
