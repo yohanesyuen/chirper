@@ -4,11 +4,19 @@ var _ = require('lodash');
 var User = require('../models/user');
 var utils = require('../utils');
 
-router.get('/follow/:id', utils.ensureAuthenticated, function(req, res, done){
-  User.findOne({_id: req.user.id}, function(err, _self, done){
-    if (_self && !err) {
-      User.findOne({_id: req.params.id}, function(err, _target, done){
-        if (!err && _target){
+router.use(utils.ensureAuthenticated);
+
+router.get('/follow/:id', function(req, res, done){
+  User.findOne({_id: req.user.id}, function(err, _self){
+    if(err){
+      return done(err);
+    }
+    if (_self) {
+      User.findOne({username: req.params.id}, function(err, _target){
+        if(err){
+          return done(err);
+        }
+        if (_target){
           _self.following.remove(_target._id);
           _self.following.push(_target._id);
           _target.followers.remove(_self._id);
@@ -17,20 +25,38 @@ router.get('/follow/:id', utils.ensureAuthenticated, function(req, res, done){
           _target.save();
           res.json({new_state: 'following'});
         }
-        else
-          done(err);
+        else{
+          User.findOne({_id: req.params.id}, function(err, _target){
+            if(err){
+              return done(err);
+            }
+            if (_target){
+              _self.following.remove(_target._id);
+              _self.following.push(_target._id);
+              _target.followers.remove(_self._id);
+              _target.followers.push(_self._id);
+              _self.save();
+              _target.save();
+              res.json({new_state: 'following'});
+            }
+          });
+        }
       });
     }
-    else
-      done(err);
   });
 });
 
-router.get('/unfollow/:id', utils.ensureAuthenticated, function(req, res, done){
+router.get('/unfollow/:id', function(req, res, done){
   User.findOne({_id: req.user.id}, function(err, _self){
-    if (_self && !err){
-      User.findOne({_id: req.params.id}, function(err, _target){
-        if (_target && !err){
+    if(err){
+      return done(err);
+    }
+    if (_self){
+      User.findOne({username: req.params.id}, function(err, _target){
+        if(err){
+          return done(err);
+        }
+        if (_target){
           _target = _target;
           _self.following.remove(_target._id);
           _target.followers.remove(_self._id);
@@ -38,12 +64,22 @@ router.get('/unfollow/:id', utils.ensureAuthenticated, function(req, res, done){
           _target.save();
           res.json({new_state: 'not-following'});
         }
-        else
-          done(err);
+        else{
+          User.findOne({_id: req.params.id}, function(err, _target){
+            if(err){
+              return done(err);
+            }
+            if (_target){
+              _self.following.remove(_target._id);
+              _target.followers.remove(_self._id);
+              _self.save();
+              _target.save();
+              res.json({new_state: 'not-following'});
+            }
+          });
+        }
       });
     }
-    else
-      done(err);
   });
 });
 
