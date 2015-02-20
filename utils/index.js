@@ -1,2 +1,2 @@
-module.exports.ensureAuthenticated = require('./ensureAuthenticated');
-module.exports.renderUser = require('./renderUser');
+module.exports.ensureAuthenticated = require('./ensureauthenticated');
+module.exports.renderUser = require('./renderuser');
