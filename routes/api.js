@@ -4,7 +4,7 @@ var _ = require('lodash');
 var User = require('../models/user');
 var utils = require('../utils');
 
-router.get('/follow/:id', ensureAuthenticated, function(req, res){
+router.get('/follow/:id', utils.ensureAuthenticated, function(req, res){
   User.findOne({_id: req.user.id}, function(err, _self, done){
     if (_self && !err) {
       User.findOne({_id: req.params.id}, function(err, _target, done){
