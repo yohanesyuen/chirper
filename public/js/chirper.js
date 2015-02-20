@@ -1,4 +1,5 @@
-'use strict'
+/*global angular*/
+
 
 var chirper = angular.module('chirper', []); // Taking Angular Application in Javascript Variable
 
