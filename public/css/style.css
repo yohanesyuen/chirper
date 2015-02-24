@@ -94,3 +94,16 @@ ul.user-details{
 .new-chirp .chirp-btn{
   margin-top: 15px;
 }
+
+.following .follow-btn .follow-text,
+.following .follow-btn .unfollow-text,
+.following .follow-btn:hover .following-text,
+.not-following .follow-btn .unfollow-text,
+.not-following .follow-btn  .following-text{
+  display: none;
+}
+
+.not-following .follow-btn .follow-text,
+.following .follow-btn:hover .unfollow-text{
+  display: block;
+}

@@ -3,8 +3,10 @@ var renderUser = function(req, res, params, done){
     done = params;
   }
   var data = {};
-  if (params.user)
+  if (params.user){
     data.user = params.user;
+    data.user = JSON.parse(JSON.stringify(data.user));
+  }
   var view = params.view;
   data.title = 'Chirper';
   if (req.isAuthenticated()){
@@ -21,9 +23,8 @@ var renderUser = function(req, res, params, done){
   }
 
   if (req.user){
-    if(data.user.followers.indexOf(req.user.str_id) > -1){
-      data.user.followed = true;
-    }
+    data.user['followed'] = (data.user.followers.indexOf(req.user.str_id) > -1) ? 'following' : 'not-following';
+    console.log(data.user);
   }
 
   if (data.feed){

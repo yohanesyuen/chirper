@@ -19,20 +19,29 @@ actions.post = function(url, params){
   xhr.send(params);
 };
 
-actions.follow = function(id){
-  var param = '';
-  param += "action=follow";
-  param += "&params=" + id;
-  console.log(param);
-  this.post(param);
+actions.get = function(url, params, callback){
+  var xhr = new XMLHttpRequest();
+
+  url += params;
+
+  xhr.onreadystatechange=function()
+  {
+    if (xhr.readyState==4 && xhr.status==200)
+    {
+      callback(JSON.parse(xhr.responseText));
+    }
+  }
+
+  xhr.open('GET', url, true);
+  xhr.send();
 };
 
-actions.unfollow = function(id){
-  var param = '';
-  param += "action=unfollow";
-  param += "&params=" + id;
-  console.log(param);
-  this.post(param);
+actions.follow = function(id, callback){
+  this.get('/api/follow/', id, callback);
+};
+
+actions.unfollow = function(id, callback){
+  this.get('/api/unfollow/', id, callback);
 };
 
 window.actions = actions;

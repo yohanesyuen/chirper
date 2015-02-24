@@ -45,7 +45,7 @@ userSchema.methods.follow = function(user, done){
   user.followers.push(this._id);
   this.save();
   user.save();
-    return done(null, {new_state: user.followers.indexOf(this._id) > -1 ? 'following' : 'not-following'} )
+    return done(null, {new_state: 'following'} )
 };
 
 userSchema.methods.unfollow = function(user, done){
@@ -55,7 +55,7 @@ userSchema.methods.unfollow = function(user, done){
   user.followers.remove(this._id);
   this.save();
   user.save();
-    return done(null, {new_state: user.followers.indexOf(this._id) > -1 ? 'not-following' : 'following'} )
+    return done(null, {new_state: 'not-following'} )
 };
 
 var User = mongoose.model('User', userSchema);
