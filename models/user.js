@@ -36,6 +36,28 @@ userSchema.methods.comparePassword = function(candidatePassword, done){
   }
 };
 
+userSchema.methods.follow = function(user, done){
+  if(!user)
+    return done('Invalid User');
+  this.following.remove(user._id);
+  user.followers.remove(this._id);
+  this.following.push(user._id);
+  user.followers.push(this._id);
+  this.save();
+  user.save();
+    return done(null, {new_state: user.followers.indexOf(this._id) > -1 ? 'following' : 'not-following'} )
+};
+
+userSchema.methods.unfollow = function(user, done){
+  if(!user)
+    return done('Invalid User');
+  this.following.remove(user._id);
+  user.followers.remove(this._id);
+  this.save();
+  user.save();
+    return done(null, {new_state: user.followers.indexOf(this._id) > -1 ? 'not-following' : 'following'} )
+};
+
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;

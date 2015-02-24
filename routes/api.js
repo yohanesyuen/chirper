@@ -17,13 +17,11 @@ router.get('/follow/:id', function(req, res, done){
           return done(err);
         }
         if (_target){
-          _self.following.remove(_target._id);
-          _self.following.push(_target._id);
-          _target.followers.remove(_self._id);
-          _target.followers.push(_self._id);
-          _self.save();
-          _target.save();
-          res.json({new_state: 'following'});
+          _self.follow(_target, function(err, state){
+            if (err)
+              res.json({err: err});
+            res.json(state);
+          });
         }
         else{
           User.findOne({_id: req.params.id}, function(err, _target){
@@ -31,13 +29,11 @@ router.get('/follow/:id', function(req, res, done){
               return done(err);
             }
             if (_target){
-              _self.following.remove(_target._id);
-              _self.following.push(_target._id);
-              _target.followers.remove(_self._id);
-              _target.followers.push(_self._id);
-              _self.save();
-              _target.save();
-              res.json({new_state: 'following'});
+              _self.follow(_target, function(err, state){
+                if (err)
+                  res.json({err: err});
+                res.json(state);
+              });
             }
           });
         }
@@ -57,12 +53,11 @@ router.get('/unfollow/:id', function(req, res, done){
           return done(err);
         }
         if (_target){
-          _target = _target;
-          _self.following.remove(_target._id);
-          _target.followers.remove(_self._id);
-          _self.save();
-          _target.save();
-          res.json({new_state: 'not-following'});
+          _self.unfollow(_target, function(err, state){
+            if (err)
+              res.json({err: err});
+            res.json(state);
+          });
         }
         else{
           User.findOne({_id: req.params.id}, function(err, _target){
@@ -70,11 +65,11 @@ router.get('/unfollow/:id', function(req, res, done){
               return done(err);
             }
             if (_target){
-              _self.following.remove(_target._id);
-              _target.followers.remove(_self._id);
-              _self.save();
-              _target.save();
-              res.json({new_state: 'not-following'});
+              _self.unfollow(_target, function(err, state){
+                if (err)
+                  res.json({err: err});
+                res.json(state);
+              });
             }
           });
         }
