@@ -12,31 +12,20 @@ router.get('/follow/:id', function(req, res, done){
       return done(err);
     }
     if (_self) {
-      User.findOne({username: req.params.id}, function(err, _target){
-        if(err){
-          return done(err);
-        }
-        if (_target){
-          _self.follow(_target, function(err, state){
-            if (err)
-              res.json({err: err});
-            res.json(state);
-          });
-        }
-        else{
-          User.findOne({_id: req.params.id}, function(err, _target){
-            if(err){
-              return done(err);
-            }
-            if (_target){
-              _self.follow(_target, function(err, state){
-                if (err)
-                  res.json({err: err});
-                res.json(state);
-              });
-            }
-          });
-        }
+      User
+      .find()
+      .or([{_id: req.params.id}, {username: req.params.id}])
+      .exec(function(err, user){
+        user = user[0];
+        if(err)
+          done(err);
+        if(!user)
+          done(null, false);
+        _self.follow(user, function(err, state){
+          if (err)
+            res.json({err: err});
+          res.json(state);
+        });
       });
     }
   });
@@ -48,31 +37,20 @@ router.get('/unfollow/:id', function(req, res, done){
       return done(err);
     }
     if (_self){
-      User.findOne({username: req.params.id}, function(err, _target){
-        if(err){
-          return done(err);
-        }
-        if (_target){
-          _self.unfollow(_target, function(err, state){
-            if (err)
-              res.json({err: err});
-            res.json(state);
-          });
-        }
-        else{
-          User.findOne({_id: req.params.id}, function(err, _target){
-            if(err){
-              return done(err);
-            }
-            if (_target){
-              _self.unfollow(_target, function(err, state){
-                if (err)
-                  res.json({err: err});
-                res.json(state);
-              });
-            }
-          });
-        }
+      User
+      .find()
+      .or([{_id: req.params.id}, {username: req.params.id}])
+      .exec(function(err, user){
+        user = user[0];
+        if(err)
+          done(err);
+        if(!user)
+          done(null, false);
+        _self.unfollow(user, function(err, state){
+          if (err)
+            res.json({err: err});
+          res.json(state);
+        });
       });
     }
   });
