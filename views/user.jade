@@ -18,9 +18,9 @@ block content
   ul
     li Chirps: #{user.chirpCount}
     li followers:
-        a(href='/users/#{user.username}/#/followers') #{user.followers.length}
+        a(href='/users/#{user.username}/#!/followers') #{user.followers.length}
     li following:
-        a(href='/users/#{user.username}/#/following') #{user.following.length}
+        a(href='/users/#{user.username}/#!/following') #{user.following.length}
 
 block scripts
   script(src='/js/user.js')
