@@ -21,8 +21,21 @@ router.post('/', function(req, res){
       });
     }
     newchirp.text = req.body.content;
-    newchirp.save();
-    res.send('Received data: ' + JSON.stringify(req.body));
+    newchirp.save(function(err){
+      if(!err){
+        var chirp_sources = req.user.following;
+        chirp_sources.push(req.user._id);
+
+        Chirp.find()
+        .where('author').in(chirp_sources)
+        .populate('author')
+        .sort('-created_at')
+        .exec(function(err, chirps){
+          res.render('feed', {chirps: chirps});
+        });
+      }
+    });
+//    res.send('Received data: ' + JSON.stringify(req.body));
   }
   else
     res.send('ERROR: No user logged in');

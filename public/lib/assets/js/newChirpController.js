@@ -4,7 +4,14 @@ angular.module('chirper', [])
   $scope.chirp = function(){
     if($scope.chirpContent){
       var content = {content: $scope.chirpContent.trim()};
-      console.log($http.post('/upload', content));
+      $http.post('/upload', content)
+      .success(function(data, status, headers, config) {
+        console.log(data);
+        $('.feed').html(data);
+      })
+      .error(function(data, status, headers, config) {
+
+      });
       $scope.chirpContent = '';
     }
     else
