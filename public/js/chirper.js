@@ -1,7 +1,8 @@
 /*global angular*/
 
 
-var chirper = angular.module('chirper', []); // Taking Angular Application in Javascript Variable
+var chirper = angular.module('chirper',
+                             ['chirper.controllers']); // Taking Angular Application in Javascript Variable
 
 // Below is the code to allow cross domain request from web server through angular.js
 chirper.config(['$httpProvider', function($httpProvider) {
