@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var User = require('../models/user');
+var Chirp = require('../models/chirp');
 var utils = require('../utils');
 
 router.use(utils.ensureAuthenticated);
@@ -54,6 +55,22 @@ router.get('/unfollow/:id', function(req, res, done){
       });
     }
   });
+});
+
+router.get('/users/feed', function(req, res, done){
+  if(req.user){
+    var chirp_sources = req.user.following;
+    chirp_sources.push(req.user._id);
+    Chirp.find()
+    .where('author').in(chirp_sources)
+    .populate('author', 'username')
+    .sort('-created_at')
+    .exec(function(err, chirps){
+      res.json(chirps);
+    });
+  }
+  else
+    res.json({err: 'This call is only available to authenticated users'});
 });
 
 module.exports = router;
