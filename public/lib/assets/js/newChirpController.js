@@ -1,4 +1,4 @@
-angular.module('chirper.controllers', [])
+angular.module('chirper.controllers')
 
 .controller('newChirpCtrl',['$scope', '$http', function($scope, $http){
   $scope.chirp = function(){

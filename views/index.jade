@@ -8,10 +8,15 @@ block content
   if logged_in_user
     +newchirp
     h1 Feed
-    .feed
-      +feed
+    .feed.container(ng-controller='feedCtrl')
+      .chirp.container(ng-repeat='chirp in chirps')
+        a(href='/users/{{chirp.author.username}}') {{chirp.author.username}}
+        p.content {{chirp.text}}
+        p.creation_time {{chirp.pretty_time}}
   else
     +login
 
 block scripts
+  script(src='/js/moment.js')
   script(src='/lib/assets/js/newChirpController.js')
+  script(src='/lib/assets/js/feedController.js')

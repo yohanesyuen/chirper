@@ -5,7 +5,7 @@ block content
   h1 #{user.firstName} #{user.lastName}
   if user.is_self
     if user.last_login
-      p You last logged on #{user.last_login.toLocaleDateString()}
+      p You last logged in on #{user.last_login}
     button.stub.btn(type='button')
       span Settings
   else
